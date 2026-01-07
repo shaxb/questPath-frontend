@@ -89,18 +89,12 @@ export default function LoginPage() {
     setError('');
     
     try {
-      // Redirect to NextAuth Google OAuth
-      const result = await signIn('google', { 
+      // Redirect to NextAuth Google OAuth - redirect: true means it won't return
+      await signIn('google', { 
         callbackUrl: '/auth/google/callback',
         redirect: true 
       });
-      
-      // If signIn returns (error case), log it
-      if (result?.error) {
-        console.error('SignIn error:', result.error);
-        setError(`Google login failed: ${result.error}`);
-        setLoading(false);
-      }
+      // Code after signIn won't execute because redirect: true redirects immediately
     } catch (err: any) {
       console.error('Google login error:', err);
       setError('Google login failed. Please try again.');
