@@ -72,10 +72,11 @@ api.interceptors.response.use(
       console.log('🔄 Access token expired, refreshing...');
       
       try {
-        // Call refresh endpoint using plain axios (not api instance to avoid interceptors)
-        // Browser automatically sends refresh_token cookie
+        // Call refresh endpoint
+        // Use the same baseURL for consistency
+        const baseURL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
         const { data } = await axios.post(
-          'http://localhost:8000/auth/refresh',
+          `${baseURL}/auth/refresh`,
           {},
           {
             withCredentials: true  // CRITICAL: Send cookies with request
